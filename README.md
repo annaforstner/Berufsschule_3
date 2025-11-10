@@ -11,3 +11,10 @@ Hier kommen die Dateien für die Berufsschule rein...
 Technologien im Einsatz:  
 PHP
 
+
+## Screenshots zur Installation von xampp
+![Screenshot](bilder/setup.png)
+![Installieren von xampp](bilder/folderl.png)
+![Installieren von xampp](bilder/choice.png)
+![Installieren von xampp](bilder/xampp_install.png)
+
