@@ -1,0 +1,15 @@
+1. Welche Informationen liefert die Funktion phpinfo();
+    Die PHP-Funktion phpinfo() gibt eine umfangreiche Übersicht über die aktuelle PHP-Konfiguration der laufenden Umgebung aus.
+    Sie wird oft zur Fehlersuche, Systemanalyse und zum Überprüfen installierter Erweiterungen eingesetzt.
+
+2. PHP.ini Einstellungen- erkläre die jeweiligen Funktionen:
+    a. PHP Fehler ausgeben
+        dispplay_errors muss on sein,  error_reporting aud E_ALL,
+        dann können alle Fehler angezeigt werden
+    b. Speichernutzung und die Laufzeit deiner Skripte limitieren
+        memory_limit legt den maximalen Arbeitsspeicher fest, den ein Skript verbrauchen darf
+        max_execution_time definiert die Laufzeit in Sekunden.
+    c. allow_url_fopen = off
+        php kann keine externen URLs öffnen
+    d. session.auto_start = off
+        Diese Einstellung legt fest, ob PHP automatisch beim Seitenaufruf eine Session startet.
