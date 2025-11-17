@@ -48,7 +48,7 @@ function tanken($a, $b){
     return $kosten; 
 
 }
-
+// eine Funktion, um die Liter zu berechnen
 function kosten($a, $b){
     $kosten = $a + $b;
     return $kosten;
