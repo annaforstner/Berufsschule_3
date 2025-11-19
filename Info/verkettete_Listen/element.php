@@ -1,12 +1,11 @@
 <?php 
 class Element{
-    private String $value;
-    public Element $next = null;
+    private $value;
+    public ?Element $next;
 
-    public function __construct(String $value){
+    public function __construct(string $value){
         $this->value = $value;
         $next = null;
-
     }
 
     public function getElement(){

@@ -2,16 +2,24 @@
 
 class Liste {
 
-public ?Element $head = null;
+public Element $head;
 
-public function __construct($value){
-    $this->head = new Element($value);
+// der Konstruktor ist von ChatGPT, weil nur ein Konstruktor möglich ist, aber zwei brauche.
+public function __construct($value = null)
+{
+    if ($value === null) {
+        $this->head = null;
+    } else {
+        $this->head = new Element($value);
+    }
 }
 
+
 public function insertFirst($value){
-    $newElement = new Element($value);
-    $newElement->next = $this->head;   // richtig verknüpfen
-    $this->head = $newElement;
+    if($this->head != null){  // richtig verknüpfen
+    $newElement->next = $this->head;
+    }
+    $head = $newElement;
 }
 
 public function deleteFirst() {
@@ -35,25 +43,15 @@ public function insertLast($value){
 }
 
 public function deleteLast(){
-    // Liste leer
-    if ($this->head === null) {
+    // Sengwein
+    if(!isset($this->head)){
         return;
     }
-
-    // Nur ein Element
-    if ($this->head->next === null) {
-        $this->head = null;
-        return;
+    $cursor = $this->head;
+    while($cursor->next->next != null){
+        $cursor = $cursor->next;
     }
-
-    // Mehrere Elemente
-    $temp = $this->head;
-
-    while ($temp->next->next !== null) {
-        $temp = $temp->next;
-    }
-
-    $temp->next = null;
+    $cursor->next = $cursor->next->next; // oder = null
 }
 
 
@@ -63,14 +61,14 @@ public function toString(){
     $temp = $this->head;
     $s = "";
 
-    while ($temp !== null) {
-        $s .= $temp->getElement();
+    while ($temp->next !== null) {
+        $s = $s + $temp->getElement().",";
+        $temp = $temp->next;
 
-        if ($temp->next !== null) {
-            $s .= ", ";
+        if ($temp !== null) {
+            $s = $s + $temp->getElement();
         }
-
-        $temp = $temp->next;  // weiterlaufen!
+        return $s;
     }
 
     return $s;
