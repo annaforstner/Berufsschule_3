@@ -1,18 +1,18 @@
 <?php 
-class Element{
-    private $value;
+class Element {
+    // ATtribute
+    private string $value;
     public ?Element $next;
 
-    public function __construct(string $value){
+    // Konstruktor
+    public function __construct(string $value) {
         $this->value = $value;
-        $next = null;
+        $this->next = null;
     }
 
-    public function getElement(){
+    //Methoden
+    public function getElement() {
         return $this->value;
     }
 }
-
-
-
 ?>
