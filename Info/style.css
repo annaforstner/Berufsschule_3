@@ -1,0 +1,20 @@
+.angabe{
+    text-align: center;
+    margin: 1rem;
+    padding: 2rem;
+    border: 10rem;
+    border-radius: 2.5rem;
+    width: auto;
+    background-color: #ffd1dc;
+}
+
+
+.bubble{
+    text-align: center;
+    background-color: #f4eeb1;
+    margin: 1rem;
+    padding: 2rem;
+    border: 10rem;
+    border-radius: 2.5rem;
+    width: auto;
+}
