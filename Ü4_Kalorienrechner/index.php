@@ -19,6 +19,8 @@ if (isset($_POST["bt_send"])) {
     } elseif (!is_numeric($gewicht) || !is_numeric($gross)) {
         echo "Das Geicht und die Größe müssen eine Zahl sein. Bitte fülle alle Felder korrekt aus.";
     }
+
+    echo "Du solltest pro Tag etwa ".getCal($geschlecht, $alter, $gewicht, $gross)." kCal verbrauchen.";
 }
 ?>
 
@@ -34,8 +36,6 @@ if (isset($_POST["bt_send"])) {
 
 <body>
     <h1>Kalorienrechner</h1>
-    <h2>We don't judge here.</h2>
-
     <div id="eingabe">
         <form action="index.php" method="POST"><!-- POST, damit die Angaben nicht in der Adresszeile erscheinen -->
             <!--Als erstes kommt das Geschlecht als Radiobox -->
@@ -56,7 +56,6 @@ if (isset($_POST["bt_send"])) {
             <!-- Hier kommt ein Button, damit die Werte gespeichert werden können -->
             <button name="bt_send">Berechnen</button>
         </form>
-        <p>Du solltest pro Tag etwa <?php echo getCal($geschlecht, $alter, $gewicht, $gross) ?> kCal verbrauchen.</p>
     </div>
     <h2>Dein Verbrauch heute</h2>
     <div id="calories">
