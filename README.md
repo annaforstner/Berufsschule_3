@@ -27,6 +27,7 @@ PHP
 Alle Primzahlen bis 77:
 
 ![Übung 3: Primzahlenberechnung](bilder/prim.png)
+
 Logarithmus von 1 bis 100, dargestellt mit Zeichen:
 ![Übung 3: Logarithmus](bilder/log.png)
 
