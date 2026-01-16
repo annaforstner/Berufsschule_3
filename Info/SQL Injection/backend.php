@@ -1,21 +1,36 @@
 <?php
 include "database.php";
 
-$sql = "SELECT * FROM `user`";
-$result = database::dbConnection()->query($sql);
-$out = "";
-while($row = $result->fetch_assoc()) {
-    $out .= "ID: " .$row["id"]. " || Name: " . $row["name"]. "|| Passwort: " . $row["password"]. "<br>";
-}
-database::dbConnection()->close();
-?>
+$conn = Database::connect();
 
+$sql = "SELECT id, name, password FROM user";
+$result = $conn->query($sql);
+
+if ($result === false) {
+    die("Query fehlgeschlagen: " . $conn->error);
+}
+
+$out = "";
+
+while ($row = $result->fetch_assoc()) {
+    $out .= "ID: " . htmlspecialchars($row["id"]) . " || ";
+    $out .= "Name: " . htmlspecialchars($row["name"]) . " || ";
+    $out .= "Passwort: " . htmlspecialchars($row["password"]) . "<br>";
+}
+
+$conn->close();
+?>
+<!DOCTYPE html>
 <html lang="de">
+
 <head>
+    <meta charset="UTF-8">
     <title>SQL-Injections BACKEND</title>
 </head>
+
 <body>
-<h1>Test-Seite BACKEND</h1>
-<?=$out?>
+    <h1>Test-Seite BACKEND</h1>
+    <?= $out ?>
 </body>
+
 </html>
