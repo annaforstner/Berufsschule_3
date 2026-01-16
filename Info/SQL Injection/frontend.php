@@ -3,16 +3,16 @@ include 'database.php';
 
 // Insert
 if (isset($_POST['submit_insert'])) {
+
+    $name = $_POST["Name"];
+    $password = $_POST["Passwort"];
     if ($name === '' || $password === '') {
         die("Bitte alle Felder ausfüllen");
     }
     if (strlen($password) < 8) {
         die("Passwort muss mindestens 8 Zeichen haben");
     }
-    $name = trim($_POST["name"]);
-    $password = trim($_POST["password"]);
     $hash = password_hash($password, PASSWORD_DEFAULT);
-
 
     $conn = Database::connect();
     // das grüne ist der Klassenname, und wird deswegen groß geschrieben
@@ -38,24 +38,30 @@ if (isset($_POST['submit_insert'])) {
 
 
 // Login
-if (isset($_REQUEST['submit_login'])) {
+if (isset($_POST['submit_login'])) {
 
-    $u_name = trim($_POST["name"]);
-    $passwort = trim($_POST["password"]);
+    $u_name   = trim($_POST["Name"]);
+    $passwort = trim($_POST["Passwort"]);
 
     $conn = Database::connect();
-    $stmt = $conn->prepare("SELECT * FROM `user` WHERE name = ?");
+
+    $stmt = $conn->prepare(
+        "SELECT password FROM user WHERE name = ?"
+    );
 
     if ($stmt === false) {
         die("Prepared Statement ist falsch: " . $conn->error);
     }
+
+    // ❗ PARAMETER BINDEN
+    $stmt->bind_param("s", $u_name);
+
     $stmt->execute();
-    $stmt->store_result();
 
-    if ($stmt->num_rows === 1) {
-        $stmt->bind_result($hash);
-        $stmt->fetch();
+    // Ergebnis binden
+    $stmt->bind_result($hash);
 
+    if ($stmt->fetch()) {
         // Passwort prüfen
         if (password_verify($passwort, $hash)) {
             header("Location: backend.php");
@@ -68,6 +74,7 @@ if (isset($_REQUEST['submit_login'])) {
     $stmt->close();
     $conn->close();
 }
+
 
 // Output
 $conn = Database::connect();
