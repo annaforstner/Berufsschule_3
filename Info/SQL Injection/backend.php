@@ -1,10 +1,17 @@
 <?php
+session_start();
 include "database.php";
 
-$conn = Database::connect();
+// Zugriff schützen
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: frontend.php");
+    exit;
+}
 
-$sql = "SELECT id, name, password FROM user";
-$result = $conn->query($sql);
+$conn = Database::connect();
+$stmt = $conn->prepare("SELECT id, name, password FROM user");
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result === false) {
     die("Query fehlgeschlagen: " . $conn->error);

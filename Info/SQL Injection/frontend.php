@@ -1,11 +1,12 @@
 <?php
+session_start();
 include 'database.php';
 
 // Insert
 if (isset($_POST['submit_insert'])) {
 
-    $name = $_POST["Name"];
-    $password = $_POST["Passwort"];
+    $name = trim($_POST["Name"]);
+    $password = trim($_POST["Passwort"]);
     if ($name === '' || $password === '') {
         die("Bitte alle Felder ausfüllen");
     }
@@ -46,29 +47,35 @@ if (isset($_POST['submit_login'])) {
     $conn = Database::connect();
 
     $stmt = $conn->prepare(
-        "SELECT password FROM user WHERE name = ?"
+        "SELECT id, password FROM user WHERE name = ?"
     );
 
     if ($stmt === false) {
         die("Prepared Statement ist falsch: " . $conn->error);
     }
 
-    // ❗ PARAMETER BINDEN
+    // PARAMETER BINDEN
     $stmt->bind_param("s", $u_name);
-
     $stmt->execute();
 
     // Ergebnis binden
-    $stmt->bind_result($hash);
+    $stmt->bind_result($user_id, $hash);
 
     if ($stmt->fetch()) {
         // Passwort prüfen
         if (password_verify($passwort, $hash)) {
+
+            // Session sicher starten
+            session_regenerate_id(true);
+
+            $_SESSION['logged_in'] = true;
+            $_SESSION['user_id']   = $user_id;
+            $_SESSION['username'] = $u_name;
+
             header("Location: backend.php");
             exit;
         }
     }
-
     echo "Passwort oder User-Name falsch";
 
     $stmt->close();
@@ -95,13 +102,10 @@ $conn->close();
 ?>
 
 <html lang="de">
-
 <head>
     <title>SQL-Injections</title>
 </head>
-
 <body>
-
     <h1>Test-Seite SQL Injections</h1>
     <h2>Insert</h2>
     <form action="frontend.php" method="POST">
