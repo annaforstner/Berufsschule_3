@@ -13,7 +13,7 @@ if (isset($_POST['submit_insert'])) {
     if (strlen($password) < 8) {
         die("Passwort muss mindestens 8 Zeichen haben");
     }
-    // salt ist schon dabei
+    // salt ist bei default schon dabei
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     $conn = Database::connect();
